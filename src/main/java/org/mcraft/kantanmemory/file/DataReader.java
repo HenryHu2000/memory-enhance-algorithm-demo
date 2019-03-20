@@ -59,7 +59,7 @@ public class DataReader {
 
 		ArrayList<Word> wordlist = new ArrayList<Word>();
 		try {
-			Iterable<CSVRecord> records = CSVFormat.EXCEL.withHeader("Word", "Kana", "Translation", "Accent")
+			Iterable<CSVRecord> records = CSVFormat.EXCEL.withHeader("Word", "Hint", "Translation", "Accent")
 					.parse(reader);
 
 			for (CSVRecord record : records) {
@@ -74,7 +74,7 @@ public class DataReader {
 
 				}
 
-				wordlist.add(new Word(record.get("Word"), record.get("Kana"), record.get("Translation"), accent));
+				wordlist.add(new Word(record.get("Word"), record.get("Hint"), record.get("Translation"), accent));
 			}
 
 		} catch (IOException e) {

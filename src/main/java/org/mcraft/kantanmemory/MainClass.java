@@ -28,94 +28,7 @@ import org.mcraft.kantanmemory.graphics.PanelState;
 public class MainClass {
 
 	public static void main(String[] args) {
-
-		if (args.length >= 1 && args[0].equalsIgnoreCase("cmd")) {
-			commandLineUI();
-		} else {
-			graphicalUI();
-		}
-	}
-
-	public static void commandLineUI() {
-
-		new DataInitializer().initializeAll();
-		UserConfig config = new DataReader().getConfig();
-		String wordlist = System.console()
-				.readLine("Please enter the name of the word list file you want to learn (blank for default): ");
-		if (wordlist.isEmpty()) {
-			wordlist = config.getCurrentWordlist() == null ? "Japanese-wordlist-1.csv" : config.getCurrentWordlist();
-		} else if (!config.getWordlists().contains(wordlist)) {
-			System.out.println("Word list not exist. Use default word list instead.");
-			wordlist = config.getCurrentWordlist() == null ? "Japanese-wordlist-1.csv" : config.getCurrentWordlist();
-		}
-		config.setCurrentWordlist(wordlist);
-		new DataWriter().saveConfig(config);
-
-		// Handle end of word list case
-		if (new DataReader().getWordlist(wordlist).length <= config.getWordlistProgress(wordlist)) {
-			// End of word list
-			System.out.println("Word list already finished!");
-		}
-
-		LearningListManager learningListManager = new LearningListManager();
-
-		int newWordNum = 0;
-		while (true) {
-			try {
-				newWordNum = Integer.parseInt(
-						System.console().readLine("Please enter the number of new words you want to learn: "));
-				break;
-			} catch (Exception e) {
-			}
-		}
-		LearningList learningList = learningListManager.generateLearningList(newWordNum, newWordNum * 5);
-		learningListManager.saveLearningList(learningList);
-		LearningProcess learningProcess = new LearningProcess(learningList);
-		System.out.println();
-
-		while (!learningProcess.isTerminated()) {
-			LearningWordData wordData = learningProcess.getCurrentWordData();
-			boolean isKnown = false;
-			switch (wordData.getKnownType()) {
-			case KNOWN:
-			case HALF_KNOWN:
-				System.out.println(wordData.getWord().getKana());
-				System.out.println("Do you know this word?");
-				isKnown = readYesOrNo();
-				if (!isKnown) {
-					System.out.println(wordData.getWord().getName());
-					System.out.println("Do you know this word now?");
-					readYesOrNo();
-				}
-				break;
-			case UNKNOWN:
-				System.out.println(wordData.getWord().getName());
-				System.out.println("Do you know this word?");
-				isKnown = readYesOrNo();
-				break;
-			}
-			System.out.println();
-
-			System.out.println(wordData.getWord().getKana()
-					+ (wordData.getWord().getAccent() != -1 ? "(" + wordData.getWord().getAccent() + ")" : ""));
-			System.out.println(wordData.getWord().getName());
-			System.out.println(wordData.getWord().getTranslation());
-
-			learningProcess.proceed(isKnown);
-
-			// Handle program closed when unfinished case
-			if (wordData.getKnownType() == KnownType.KNOWN) {
-				learningListManager.saveLearningList(learningProcess.getFinishedWordList());
-				learningProcess.getFinishedWordList().clear();
-			}
-
-			System.console().readLine("(Press enter to continue)");
-			System.out.println("\n----------------\n");
-		}
-
-		System.out.println("All words finished!");
-		learningListManager.saveLearningList(learningProcess.getFinishedWordList());
-
+		graphicalUI();
 	}
 
 	public static boolean readYesOrNo() {
@@ -218,7 +131,7 @@ public class MainClass {
 			public void actionPerformed(ActionEvent arg0) {
 				AppPanel appPanel = frame.getAppPanel();
 				switch (appPanel.getState()) {
-				case KANA_QUESTION:
+				case HINT_QUESTION:
 					appPanel.setKnown(true);
 					break;
 				case WORD_QUESTION:
@@ -242,7 +155,7 @@ public class MainClass {
 			public void actionPerformed(ActionEvent arg0) {
 				AppPanel appPanel = frame.getAppPanel();
 				switch (appPanel.getState()) {
-				case KANA_QUESTION:
+				case HINT_QUESTION:
 					appPanel.setKnown(false);
 					appPanel.setState(PanelState.WORD_QUESTION);
 					break;
@@ -272,7 +185,7 @@ public class MainClass {
 						return;
 					}
 					if (learningProcess.getCurrentWordData().getKnownType() != KnownType.UNKNOWN) {
-						appPanel.setState(PanelState.KANA_QUESTION);
+						appPanel.setState(PanelState.HINT_QUESTION);
 					} else {
 						appPanel.setState(PanelState.WORD_QUESTION);
 					}
@@ -283,7 +196,7 @@ public class MainClass {
 
 		// Put the first word into GUI
 		AppPanel appPanel = frame.getAppPanel();
-		appPanel.setState(PanelState.KANA_QUESTION);
+		appPanel.setState(PanelState.HINT_QUESTION);
 		if (!learningProcess.isTerminated()) {
 			appPanel.refreshPanel(learningProcess.getCurrentWordData().getWord());
 		} else {

@@ -6,5 +6,5 @@ package org.mcraft.kantanmemory.graphics;
  *
  */
 public enum PanelState {
-	KANA_QUESTION, WORD_QUESTION, ANSWER;
+	HINT_QUESTION, WORD_QUESTION, ANSWER;
 }

@@ -63,9 +63,9 @@ public class AppPanel extends JPanel {
 
 	public void refreshPanel(Word word) {
 		switch (state) {
-		case KANA_QUESTION:
+		case HINT_QUESTION:
 			initializePanel();
-			wordLabel.setText(word.getKana());
+			wordLabel.setText(word.getHint());
 			knownButton.setEnabled(true);
 			unknownButton.setEnabled(true);
 			break;
@@ -78,7 +78,7 @@ public class AppPanel extends JPanel {
 		case ANSWER:
 			initializePanel();
 			wordLabel.setText(
-					"<html><center>" + word.getKana() + (word.getAccent() != -1 ? "(" + word.getAccent() + ")" : "")
+					"<html><center>" + word.getHint() + (word.getAccent() != -1 ? "(" + word.getAccent() + ")" : "")
 							+ "<br>" + word.getName() + "</center></html>");
 			translationLabel.setText("<html><center>" + word.getTranslation() + "</center></html>");
 			continueButton.setEnabled(true);

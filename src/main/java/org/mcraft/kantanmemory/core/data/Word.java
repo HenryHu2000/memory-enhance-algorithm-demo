@@ -7,7 +7,7 @@ package org.mcraft.kantanmemory.core.data;
  */
 public class Word implements Comparable<Word> {
 	private String name;
-	private String kana;
+	private String hint;
 	private String translation;
 	private int accent;
 
@@ -16,16 +16,16 @@ public class Word implements Comparable<Word> {
 
 	}
 
-	public Word(String name, String kana, String translation) {
+	public Word(String name, String hint, String translation) {
 		this.name = name;
-		this.kana = kana;
+		this.hint = hint;
 		this.translation = translation;
 		this.accent = -1;
 	}
 
 	public Word(String name, String kana, String translation, int accent) {
 		this.name = name;
-		this.kana = kana;
+		this.hint = kana;
 		this.translation = translation;
 		this.accent = accent;
 	}
@@ -33,7 +33,7 @@ public class Word implements Comparable<Word> {
 	@Override
 	public boolean equals(Object o) {
 		if (o instanceof Word) {
-			return (this.name.equals(((Word) o).getName())) && (this.kana.equals(((Word) o).getKana()))
+			return (this.name.equals(((Word) o).getName())) && (this.hint.equals(((Word) o).getHint()))
 					&& (this.translation.equals(((Word) o).getTranslation()));
 		}
 		return false;
@@ -44,8 +44,8 @@ public class Word implements Comparable<Word> {
 		// TODO Auto-generated method stub
 		if (this.equals(anotherWord)) {
 			return 0;
-		} else if (this.kana.compareTo(anotherWord.getKana()) != 0) {
-			return this.kana.compareTo(anotherWord.getKana());
+		} else if (this.hint.compareTo(anotherWord.getHint()) != 0) {
+			return this.hint.compareTo(anotherWord.getHint());
 		} else if (this.name.compareTo(anotherWord.getName()) != 0) {
 			return this.name.compareTo(anotherWord.getName());
 		} else if (this.translation.compareTo(anotherWord.getTranslation()) != 0) {
@@ -62,12 +62,12 @@ public class Word implements Comparable<Word> {
 		this.name = name;
 	}
 
-	public String getKana() {
-		return kana;
+	public String getHint() {
+		return hint;
 	}
 
-	public void setKana(String kana) {
-		this.kana = kana;
+	public void setHint(String kana) {
+		this.hint = kana;
 	}
 
 	public String getTranslation() {
