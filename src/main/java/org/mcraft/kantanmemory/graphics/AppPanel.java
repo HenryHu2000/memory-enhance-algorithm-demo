@@ -65,22 +65,21 @@ public class AppPanel extends JPanel {
 		switch (state) {
 		case HINT_QUESTION:
 			initializePanel();
-			wordLabel.setText(word.getHint());
+			wordLabel.setText(word.getName());
+			translationLabel.setText(word.getHint());
 			knownButton.setEnabled(true);
 			unknownButton.setEnabled(true);
 			break;
 		case WORD_QUESTION:
 			initializePanel();
-			wordLabel.setText(word.getName() + (word.getAccent() != -1 ? "(" + word.getAccent() + ")" : ""));
+			wordLabel.setText(word.getName());
 			knownButton.setEnabled(true);
 			unknownButton.setEnabled(true);
 			break;
 		case ANSWER:
 			initializePanel();
-			wordLabel.setText(
-					"<html><center>" + word.getHint() + (word.getAccent() != -1 ? "(" + word.getAccent() + ")" : "")
-							+ "<br>" + word.getName() + "</center></html>");
-			translationLabel.setText("<html><center>" + word.getTranslation() + "</center></html>");
+			wordLabel.setText(word.getName());
+			translationLabel.setText(word.getTranslation());
 			continueButton.setEnabled(true);
 			break;
 		default:

@@ -158,7 +158,7 @@ public class DataInitializer {
 
 	// Copy all word lists from jar to the folder where jar locates
 	private void copyDefaultWordlists() {
-		final String[] defaultWordlists = new String[] { "Japanese-wordlist-1.csv", "Japanese-wordlist-2.csv" };
+		final String[] defaultWordlists = new String[] { "wordlist.csv" };
 
 		for (String defaultWordlist : defaultWordlists) {
 			copyWordlistFromJar(defaultWordlist);

@@ -53,74 +53,84 @@ public class MainClass {
 		new DataInitializer().initializeAll();
 		UserConfig config = new DataReader().getConfig();
 
-		int newWordNum = 0;
-		int revisionWordNum = 0;
-		while (true) {
-			try {
-				String[] learningModes = new String[] { "New word mode", "Review mode" };
-				String learningMode = (String) JOptionPane.showInputDialog(frame,
-						"<html><font size=+2>" + "New word mode or review mode?" + "</font></html>",
-						AppFrame.FRAME_TITLE, JOptionPane.QUESTION_MESSAGE, null, learningModes, learningModes[0]);
-
-				if (learningMode == null) {
-					System.exit(0);
-				} else if (learningMode.equals(learningModes[0])) {
-					// New word mode
-
-					// Choose the word list to learn new words from
-					String wordlist = "";
-					String[] wordlists = config.getWordlists().toArray(new String[config.getWordlists().size()]);
-					wordlist = (String) JOptionPane.showInputDialog(frame,
-							"<html><font size=+2>" + "Which word list do you want to learn? (enter file name)"
-									+ "</font></html>",
-							AppFrame.FRAME_TITLE, JOptionPane.QUESTION_MESSAGE, null, wordlists,
-							config.getCurrentWordlist() != null ? config.getCurrentWordlist() : wordlists[0]);
-					if (wordlist == null) {
-						System.exit(0);
-					}
-					config.setCurrentWordlist(wordlist);
-					new DataWriter().saveConfig(config);
-
-					// Handle end of word list case
-					if (new DataReader().getWordlist(wordlist).length <= config.getWordlistProgress(wordlist)) {
-						// End of word list
-						JOptionPane.showMessageDialog(frame,
-								"<html><font size=+2>" + "Word list already finished!" + "</font></html>");
-						continue;
-					}
-
-					// Prompt to ask for number of new words
-					final int defaultNewWordNum = 10;
-					Object newWordNumObj = JOptionPane.showInputDialog(frame,
-							"<html><font size=+2>" + "How many new words do you want to learn?" + "</font></html>",
-							AppFrame.FRAME_TITLE, JOptionPane.QUESTION_MESSAGE, null,
-							new Integer[] { 5, 10, 15, 20, 25, 30, 40, 50, 60, 70, 80, 90, 100 }, defaultNewWordNum);
-					if (newWordNumObj == null) {
-						System.exit(0);
-					}
-					newWordNum = (int) newWordNumObj;
-					revisionWordNum = newWordNum * 5;
-
-				} else if (learningMode.equals(learningModes[1])) {
-					// Review mode
-
-					// Prompt to ask for number of revision words
-					final int defaultRevisionWordNum = 50;
-					Object revisionWordNumObj = JOptionPane.showInputDialog(frame,
-							"<html><font size=+2>" + "How many words do you want to review?" + "</font></html>",
-							AppFrame.FRAME_TITLE, JOptionPane.QUESTION_MESSAGE, null,
-							new Integer[] { 25, 50, 75, 100, 125, 150, 200, 250, 300, 350, 400, 450, 500 },
-							defaultRevisionWordNum);
-					if (revisionWordNumObj == null) {
-						System.exit(0);
-					}
-					revisionWordNum = (int) revisionWordNumObj;
-					newWordNum = 0;
-				}
-				break;
-			} catch (Exception e) {
-			}
+		final int newWordNum = 25;
+		final int revisionWordNum = newWordNum * 5;
+		final String wordlist = "wordlist.csv";
+		config.setCurrentWordlist(wordlist);
+		new DataWriter().saveConfig(config);
+		if (new DataReader().getWordlist(wordlist).length <= config.getWordlistProgress(wordlist)) {
+			// End of word list
+			JOptionPane.showMessageDialog(frame,
+					"<html><font size=+2>" + "Word list already finished!" + "</font></html>");
+			System.exit(0);
 		}
+
+//		while (true) {
+//			try {
+//				String[] learningModes = new String[] { "New word mode", "Review mode" };
+//				String learningMode = (String) JOptionPane.showInputDialog(frame,
+//						"<html><font size=+2>" + "New word mode or review mode?" + "</font></html>",
+//						AppFrame.FRAME_TITLE, JOptionPane.QUESTION_MESSAGE, null, learningModes, learningModes[0]);
+//
+//				if (learningMode == null) {
+//					System.exit(0);
+//				} else if (learningMode.equals(learningModes[0])) {
+//					// New word mode
+//
+//					// Choose the word list to learn new words from
+//					String wordlist = "";
+//					String[] wordlists = config.getWordlists().toArray(new String[config.getWordlists().size()]);
+//					wordlist = (String) JOptionPane.showInputDialog(frame,
+//							"<html><font size=+2>" + "Which word list do you want to learn?" + "</font></html>",
+//							AppFrame.FRAME_TITLE, JOptionPane.QUESTION_MESSAGE, null, wordlists,
+//							config.getCurrentWordlist() != null ? config.getCurrentWordlist() : wordlists[0]);
+//					if (wordlist == null) {
+//						System.exit(0);
+//					}
+//					config.setCurrentWordlist(wordlist);
+//					new DataWriter().saveConfig(config);
+//
+//					// Handle end of word list case
+//					if (new DataReader().getWordlist(wordlist).length <= config.getWordlistProgress(wordlist)) {
+//						// End of word list
+//						JOptionPane.showMessageDialog(frame,
+//								"<html><font size=+2>" + "Word list already finished!" + "</font></html>");
+//						continue;
+//					}
+//
+//					// Prompt to ask for number of new words
+//					final int defaultNewWordNum = 10;
+//					Object newWordNumObj = JOptionPane.showInputDialog(frame,
+//							"<html><font size=+2>" + "How many new words do you want to learn?" + "</font></html>",
+//							AppFrame.FRAME_TITLE, JOptionPane.QUESTION_MESSAGE, null,
+//							new Integer[] { 5, 10, 15, 20, 25, 30, 40, 50, 60, 70, 80, 90, 100 }, defaultNewWordNum);
+//					if (newWordNumObj == null) {
+//						System.exit(0);
+//					}
+//					newWordNum = (int) newWordNumObj;
+//					revisionWordNum = newWordNum * 5;
+//
+//				} else if (learningMode.equals(learningModes[1])) {
+//					// Review mode
+//
+//					// Prompt to ask for number of revision words
+//					final int defaultRevisionWordNum = 50;
+//					Object revisionWordNumObj = JOptionPane.showInputDialog(frame,
+//							"<html><font size=+2>" + "How many words do you want to review?" + "</font></html>",
+//							AppFrame.FRAME_TITLE, JOptionPane.QUESTION_MESSAGE, null,
+//							new Integer[] { 25, 50, 75, 100, 125, 150, 200, 250, 300, 350, 400, 450, 500 },
+//							defaultRevisionWordNum);
+//					if (revisionWordNumObj == null) {
+//						System.exit(0);
+//					}
+//					revisionWordNum = (int) revisionWordNumObj;
+//					newWordNum = 0;
+//				}
+//				break;
+//			} catch (Exception e) {
+//			}
+//		}
+
 		final LearningListManager learningListManager = new LearningListManager();
 		LearningList learningList = learningListManager.generateLearningList(newWordNum, revisionWordNum);
 		final LearningProcess learningProcess = new LearningProcess(learningList);
@@ -131,10 +141,10 @@ public class MainClass {
 			public void actionPerformed(ActionEvent arg0) {
 				AppPanel appPanel = frame.getAppPanel();
 				switch (appPanel.getState()) {
-				case HINT_QUESTION:
+				case WORD_QUESTION:
 					appPanel.setKnown(true);
 					break;
-				case WORD_QUESTION:
+				case HINT_QUESTION:
 					if (learningProcess.getCurrentWordData().getKnownType() != KnownType.UNKNOWN) {
 						// Known and half-known words are expected to be known at the first try
 						appPanel.setKnown(false);
@@ -155,11 +165,11 @@ public class MainClass {
 			public void actionPerformed(ActionEvent arg0) {
 				AppPanel appPanel = frame.getAppPanel();
 				switch (appPanel.getState()) {
-				case HINT_QUESTION:
-					appPanel.setKnown(false);
-					appPanel.setState(PanelState.WORD_QUESTION);
-					break;
 				case WORD_QUESTION:
+					appPanel.setKnown(false);
+					appPanel.setState(PanelState.HINT_QUESTION);
+					break;
+				case HINT_QUESTION:
 					appPanel.setKnown(false);
 					appPanel.setState(PanelState.ANSWER);
 					break;
@@ -185,9 +195,9 @@ public class MainClass {
 						return;
 					}
 					if (learningProcess.getCurrentWordData().getKnownType() != KnownType.UNKNOWN) {
-						appPanel.setState(PanelState.HINT_QUESTION);
-					} else {
 						appPanel.setState(PanelState.WORD_QUESTION);
+					} else {
+						appPanel.setState(PanelState.HINT_QUESTION);
 					}
 				}
 				appPanel.refreshPanel(learningProcess.getCurrentWordData().getWord());
@@ -196,7 +206,7 @@ public class MainClass {
 
 		// Put the first word into GUI
 		AppPanel appPanel = frame.getAppPanel();
-		appPanel.setState(PanelState.HINT_QUESTION);
+		appPanel.setState(PanelState.WORD_QUESTION);
 		if (!learningProcess.isTerminated()) {
 			appPanel.refreshPanel(learningProcess.getCurrentWordData().getWord());
 		} else {
