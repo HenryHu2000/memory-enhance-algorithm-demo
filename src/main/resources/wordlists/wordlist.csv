@@ -24,7 +24,7 @@ zwei,two,二
 drei,three,三
 vier,four,四
 fünf,five,五
-gro?,big,大
+groß,big,大
 lang,long,長
 "breit, weit",wide,寬
 dick,thick,厚
@@ -77,7 +77,7 @@ Mund,mouth,口
 Zahn,tooth,牙
 Zunge,tongue,舌
 Fingernagel,fingernail,指甲
-Fu?,foot,腳
+Fuß,foot,腳
 Bein,leg,腿
 Knie,knee,膝
 Hand,hand,手
@@ -91,7 +91,7 @@ Herz,heart,心
 Leber,liver,肝
 trinken,to drink,喝
 essen,to eat,吃
-bei?en,to bite,咬
+beißen,to bite,咬
 saugen,to suck,吸
 spucken,to spit,吐
 erbrechen,to vomit,嘔
@@ -99,7 +99,7 @@ blasen,to blow,吹
 atmen,to breathe,呼吸
 lachen,to laugh,笑
 sehen,to see,看
-h?ren,to hear,聽
+hören,to hear,聽
 "wissen, kennen",to know,知
 denken,to think,想
 riechen,to smell,嗅
@@ -107,8 +107,8 @@ fürchten,to fear,怕
 schlafen,to sleep,睡
 leben,to live,住
 sterben,to die,死
-t?ten,to kill,殺
-k?mpfen,to fight,鬥
+töten,to kill,殺
+kämpfen,to fight,鬥
 jagen,to hunt,獵
 schlagen,to hit,擊
 schneiden,to cut,切
@@ -135,13 +135,13 @@ ziehen,to pull,拉
 drücken,to push,推
 werfen,to throw,扔
 binden,to tie,繫
-n?hen,to sew,縫
-z?hlen,to count,計
+nähen,to sew,縫
+zählen,to count,計
 sagen,to say,說
 singen,to sing,唱
 spielen,to play,玩
 schweben,to float,浮
-flie?en,to flow,流
+fließen,to flow,流
 frieren,to freeze,凍
 schwellen,to swell,腫
 Sonne,sun,日
@@ -167,12 +167,12 @@ Rauch,smoke,煙
 Feuer,fire,火
 Asche,ash,灰
 brennen,to burn,燒
-Stra?e,road,路
+Straße,road,路
 Berg,mountain,山
 rot,red,紅
 grün,green,綠
 gelb,yellow,黃
-wei?,white,白
+weiß,white,白
 schwarz,black,黑
 Nacht,night,夜
 Tag,day,晝
