@@ -30,8 +30,8 @@ public class LearningProcess {
 
 	public LearningProcess(LearningList learningList) {
 
+		newWordList.addAll(learningList.getNewWordList()); // new words at the front
 		newWordList.addAll(learningList.getRevisionList());
-		newWordList.addAll(learningList.getNewWordList()); // new words at the back
 
 		if (!getAllWords().isEmpty()) {
 			isTerminated = false;
